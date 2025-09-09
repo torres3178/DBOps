@@ -18,7 +18,7 @@ pipeline {
          stage('Validate DB scripts') {
     steps {
         bat '''
-            docker run --rm ^
+            docker run -- rm ^
               --network=cicd-dbo-demo_default ^
               -v C:/ProgramData/Jenkins/.jenkins/workspace/CICD-DBOps/db/migrations:/flyway/sql ^
               flyway/flyway:10 ^
