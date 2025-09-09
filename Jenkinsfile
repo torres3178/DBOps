@@ -19,7 +19,8 @@ pipeline {
             --network=cicd-dbo-demo_default ^
             -v C:/ProgramData/Jenkins/.jenkins/workspace/CICD-DBOps/db/migrations:/flyway/sql ^
             flyway/flyway:10 ^
-            -url=jdbc:postgresql://db_staging:5432/app_staging ^
+            -url=jdbc:postgresql://host.docker.internal:5432/app_staging
+ ^
             -user=app ^
             -password=app_pw ^
             -validateMigrationNaming=true info
