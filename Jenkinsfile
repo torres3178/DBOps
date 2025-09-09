@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        batt 'docker build -t "$APP_IMAGE" ./app'
+        bat 'docker build -t "$APP_IMAGE" ./app'
       }
     }
 
