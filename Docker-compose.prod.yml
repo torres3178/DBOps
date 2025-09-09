@@ -1,0 +1,26 @@
+services:
+  db_prod:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app_pw
+      POSTGRES_DB: app_prod
+    volumes:
+      - prod_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  app_prod:
+    build: ./app
+    environment:
+      DATABASE_URL: postgresql://app:app_pw@db_prod:5432/app_prod
+    depends_on:
+      db_prod:
+        condition: service_healthy
+    ports:
+      - "7002:7000"
+
+volumes:
+  prod_db:
