@@ -26,10 +26,6 @@ pipeline {
               -user=app ^
               -password=app_pw ^
               -validateMigrationNaming=true info
-        '''
-    }
-}
-
 
         '''
       }
