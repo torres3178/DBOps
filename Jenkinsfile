@@ -15,10 +15,14 @@ pipeline {
     stage('Validate DB scripts') {
       steps {
         bat '''
-          docker run --rm \
-            -v "C:/ProgramData/Jenkins/.jenkins/workspace/CICD-DBOps/db/migrations:/flyway/sql" \
-            flyway/flyway:10 \
-            -validateMigrationNaming=true info
+          docker run --rm ^
+  -v C:/ProgramData/Jenkins/.jenkins/workspace/CICD-DBOps/db/migrations:/flyway/sql ^
+  flyway/flyway:10 ^
+  -url=jdbc:postgresql://host.docker.internal:5432/testdb ^
+  -user=postgres ^
+  -password=postgres ^
+  -validateMigrationNaming=true info
+
         '''
       }
     }
