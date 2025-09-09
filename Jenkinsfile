@@ -8,13 +8,13 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build -t "$APP_IMAGE" ./app'
+        batt 'docker build -t "$APP_IMAGE" ./app'
       }
     }
 
     stage('Validate DB scripts') {
       steps {
-        sh '''
+        bat '''
           docker run --rm \
             -v "$PWD/db/migrations:/flyway/sql" \
             flyway/flyway:10 \
@@ -25,7 +25,7 @@ pipeline {
 
     stage('Test') {
       steps {
-        sh '''
+        bat '''
           # Start test DB
           docker rm -f ci-test-db || true
           docker run -d --name ci-test-db \
@@ -51,7 +51,7 @@ pipeline {
 
     stage('Deploy Staging') {
       steps {
-        sh '''
+        bat '''
           docker compose -p staging -f docker-compose.staging.yml up -d --build
         '''
       }
@@ -62,7 +62,7 @@ pipeline {
         script {
           input message: 'Deploy to PROD?', ok: 'Yes, deploy'
         }
-        sh '''
+        bat '''
           docker compose -p prod -f docker-compose.prod.yml up -d --build
         '''
       }
