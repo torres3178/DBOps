@@ -16,7 +16,7 @@ pipeline {
       steps {
         bat '''
           docker run --rm \
-            -v "$PWD/db/migrations:/flyway/sql" \
+            -v "C:/ProgramData/Jenkins/.jenkins/workspace/CICD-DBOps/db/migrations:/flyway/sql" \
             flyway/flyway:10 \
             -validateMigrationNaming=true info
         '''
@@ -35,7 +35,7 @@ pipeline {
 
           # Apply migrations
           docker run --rm --network host \
-            -v "$PWD/db/migrations:/flyway/sql" \
+            -v "C:/ProgramData/Jenkins/.jenkins/workspace/CICD-DBOps/db/migrations:/flyway/sql" \
             flyway/flyway:10 \
             -url=jdbc:postgresql://127.0.0.1:55432/testdb \
             -user=test -password=secret migrate
